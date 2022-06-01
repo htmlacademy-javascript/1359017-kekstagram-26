@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Ekaterina Bolshakova](https://up.htmlacademy.ru/javascript/26/user/1359017).
-* Наставник:[Arthur Litovko](https://github.com/baileys-li).
+* Наставник: [Arthur Litovko](https://github.com/baileys-li).
 
 ---
 
