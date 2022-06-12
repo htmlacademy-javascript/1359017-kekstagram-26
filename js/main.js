@@ -1,9 +1,9 @@
 function getRandom(min, max) {
-  if (min >= 0 && max > min){
-    return Math.floor(Math.random() * (max-min)+min);
-  }
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min; // MDN
 }
-getRandom(0, 10);
+getRandom(0,10);
 
 function checkString (string, long){
   if (string.length > long){
@@ -11,3 +11,4 @@ function checkString (string, long){
   }
   return true;
 }
+checkString('Hello', 100);
