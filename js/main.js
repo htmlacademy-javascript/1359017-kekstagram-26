@@ -29,22 +29,33 @@ const avatarUsers=['img/avatar-1.svg','img/avatar-2.svg','img/avatar-3.svg','img
 const messageUsers=['Всё отлично!','Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',];
 //добавляем метод для генерации массива
 const getRandomArrayElement = (elements) => elements [getRandom(0, elements.length - 1)];
+function*generateId(){
+  let id=1;
+  while(true){
+    yield id;
+    id++;
+  }
+}
+const commentsID=generateId();
 
 
-const  createComments = () => {
-  return {
-    name:getRandomArrayElement(usersNames),
-    avatar: getRandomArrayElement(avatarUsers),
-    message:getRandomArrayElement(messageUsers),
-  };
-};
-createComments(0,6);
+const  createComments = () => ({
+  name: getRandomArrayElement(usersNames),
+  avatar: getRandomArrayElement(avatarUsers),
+  message:getRandomArrayElement(messageUsers),
+  id: commentsID.next().value,
+});
+createComments();
+const createPhoto= () => ({
+  id: getRandomArrayElement(ID),
+  url: getRandomArrayElement(URL),
+  desсription: getRandomArrayElement(descriptionPhoto),
+  comments: Array.from({
+    length:getRandom(1, 6)
+  },createComments),
+});
+const photos=Array.from({length: 25},createPhoto);
+console.log(createPhoto());
+console.log(createComments());
+console.log(photos);
 
-const createPhoto= () => {
-  return{
-    deskription:getRandomArrayElement(descriptionPhoto),
-    url: getRandomArrayElement(URL),
-    id: getRandom(ID),
-  };
-};
-createPhoto(0,25);
