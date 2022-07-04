@@ -38,10 +38,11 @@ const createPhoto= () => ({
     length:getRandom(1, 6)
   },createComments),
 });
-const photos=Array.from({length: 25},createPhoto);
-console.log(createPhoto());
+const createMockPhotos=()=>Array.from({length: 25},createPhoto);
+//const photos=Array.from({length: 25},createPhoto);
+/*console.log(createPhoto());
 console.log(createComments());
-console.log(photos);
+console.log(photos);*/
+export default createMockPhotos;
+export {createPhoto,createComments};
 
-export {createPhoto};
-export {createComments};

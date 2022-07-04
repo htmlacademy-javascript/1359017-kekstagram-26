@@ -1,8 +1,6 @@
 
-import './data.js';
-import  './util.js';
+import createMockPhotos from './data.js';
 
-/*import {createPhoto} from './data.js';
-import {createComments} from './data.js';
-console.log(createPhoto);
-console.log(createComments);*/
+// eslint-disable-next-line no-console
+console.log(createMockPhotos());
+
