@@ -39,10 +39,7 @@ const createPhoto= () => ({
   },createComments),
 });
 const createMockPhotos=()=>Array.from({length: 25},createPhoto);
-//const photos=Array.from({length: 25},createPhoto);
-/*console.log(createPhoto());
-console.log(createComments());
-console.log(photos);*/
+
 export default createMockPhotos;
 export {createPhoto,createComments};
 

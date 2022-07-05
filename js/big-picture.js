@@ -1,8 +1,7 @@
-import {similarPictures} from './makepicture.js';
-const photoUser=similarPictures;
 
 const thumbnails=document.querySelectorAll('.picture');
 const fullPicture=document.querySelector('.big-picture');
+
 
 fullPicture.classList.remove('hidden');
 const fullPictureScreen = fullPicture.querySelector('.big-picture__img img');
