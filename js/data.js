@@ -41,5 +41,5 @@ const createPhoto= () => ({
 const createMockPhotos=()=>Array.from({length: 25},createPhoto);
 
 export default createMockPhotos;
-export {createPhoto,createComments};
+//export {createPhoto,createComments};
 

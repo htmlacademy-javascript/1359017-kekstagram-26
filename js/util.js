@@ -17,4 +17,6 @@ checkString('Hello', 100);
 
 //добавляем метод для генерации массива
 const getRandomArrayElement = (elements) => elements [getRandom(0, elements.length - 1)];
-export {getRandomArrayElement, checkString,getRandom };
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomArrayElement, checkString,getRandom ,isEscapeKey};
