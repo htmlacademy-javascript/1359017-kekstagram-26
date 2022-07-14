@@ -10,6 +10,7 @@ closeBigPictureButtonElement.addEventListener('click', () => {
   hideBigPicture();
 });
 
+
 similarPictures.forEach (({url, comments, likes})=> {
   const pictureElement=pictureTemplate.cloneNode(true);
 
