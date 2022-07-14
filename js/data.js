@@ -33,6 +33,7 @@ createComments();
 const createPhoto= () => ({
   id: getRandomArrayElement(ID),
   url: getRandomArrayElement(URL),
+  likes: getRandom(0,60),
   desсription: getRandomArrayElement(descriptionPhoto),
   comments: Array.from({
     length:getRandom(1, 6)
