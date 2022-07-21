@@ -1,3 +1,4 @@
+import {resetScale} from './scale.js';
 const uploadForm = document.querySelector('.img-upload__form');
 const bodyElement = document.querySelector('body');
 const uploadFile = document.querySelector('#upload-file');
@@ -26,6 +27,7 @@ function uploadImageClose () {
   uploadOverlay.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
+  resetScale();
 }
 
 uploadFile.addEventListener('input', uploadImageOpen);
@@ -67,8 +69,6 @@ function validateLength(value){
   return checkString(value,140);
 }
 
-
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+uploadForm.addEventListener('submit', () => {
   pristine.validate();
 });
