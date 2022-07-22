@@ -116,7 +116,7 @@ const noneEffect = () => {
   effectLevelValue .value = '';
 };
 
-
+/*
 const changeEffect = (evt) => {
 
   const selectedEffect = evt.target.value;
@@ -130,7 +130,31 @@ const changeEffect = (evt) => {
     ImgUploadPreview.classList.add(`effects__preview--${selectedEffect}`);
     effectLevelSlider .noUiSlider.updateOptions(effects[selectedEffect].options);
   }
+};*/
+
+const changeEffect  = (evt) => {
+  if (evt.target.matches('input[type="radio"]')) {
+    const currentValue = evt.target.value;
+    if (currentValue === 'none') {
+      noneEffect ();
+      return;
+    }
+
+    effectLevel.classList.remove('hidden');
+    effectLevelSlider.removeAttribute('disabled', true);
+    ImgUploadPreview.classList.add(`effects__preview--${currentValue}`);
+
+    effectLevelSlider.noUiSlider.updateOptions(effects [currentValue].options);
+
+    effectLevelSlider.noUiSlider.on('update',  () => {
+      effectLevelValue.value = effectLevelSlider.noUiSlider.get();
+
+      const {filter, unit} =effects [currentValue];
+      ImgUploadPreview.style.filter = `${filter}(${effectLevelValue.value}${unit}`;
+    });
+  }
 };
+
 effectsList.addEventListener('change', changeEffect);
 
 export {resetScale};
