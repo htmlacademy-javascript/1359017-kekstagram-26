@@ -1,40 +1,73 @@
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
-const ImgUploadPreview= document.querySelector('.img-upload__preview img');
-const defaultScaleControlValue = scaleControlValue.value;
-let currentSize=100;
-
+const imgUploadPreview= document.querySelector('.img-upload__preview img');
+//const defaultScaleControlValue = scaleControlValue.value;
+let currentSize=Number(scaleControlValue.value.slice(0, -1));
+const defaultScaleControlValue=currentSize;
 
 const imgUploadEffect = document.querySelector('.img-upload__effect-level');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const effectLevel = document.querySelector('.effect-level');
-const effectsList = document.querySelector('.effects__list');
+const effectsList = document.querySelector('.img-upload__effects');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
 
 
 scaleControlSmaller.addEventListener('click', () => {
   if (currentSize > 25) {
-    scaleControlValue.value = `${currentSize -= 25}%`;
-    ImgUploadPreview.style.transform = `scale(${scaleControlValue.value})`;
+    /*scaleControlValue.value = `${currentSize -= 25}%`;
+    imgUploadPreview.style.transform = `scale(${scaleControlValue.value})`;*/
+    changeSize(currentSize - 25);
   }
 });
 
 scaleControlBigger.addEventListener('click', () => {
   if (currentSize  < 100) {
-    scaleControlValue.value = `${currentSize  += 25}%`;
-    ImgUploadPreview.style.transform = `scale(${currentSize.value})`;
+    //scaleControlValue.value = `${currentSize  += 25}%`;
+    //imgUploadPreview.style.transform = `scale(${scaleControlValue.value})`;
+    changeSize(currentSize + 25);
   }
 });
+effectsList.addEventListener('change', changeEffect);
+
 function resetScale () {
-  currentSize= 100;
-  scaleControlValue.value = defaultScaleControlValue;
-  ImgUploadPreview.removeAttribute('style');
+  //currentSize= 100;
+  //scaleControlValue.value = defaultScaleControlValue;
+  changeSize(defaultScaleControlValue);
+  imgUploadPreview.removeAttribute('style');
+
 }
-resetScale();
+
+//resetScale();
+
+function changeSize(newValue){
+  currentSize = newValue;
+  imgUploadPreview.style.transform = 'scale($ {currentSize / 100} )';
+  scaleControlValue.value= '$ {currentSize} %';
+}
 
 
 effectLevel.classList.add('hidden');
+
+const optionsFromZeroToOne= {
+  range: {
+    min :0,
+    max:1,
+  },
+  start:1,
+  step:0.1
+};
+
+const optionsFromZerooThree={
+  range: {
+    min :0,
+    max:3,
+  },
+  start:3,
+  step:0.1
+};
+
+
 const effects = {
   chrome: {
     filter: 'grayscale',
@@ -99,20 +132,15 @@ const effects = {
   },
 };
 noUiSlider.create(effectLevelSlider, {
-  range: {
-    min: 0,
-    max: 1,
-  },
-  start: 1,
-  step: 0.1,
+  optionsFromZeroToOne,
   connect: 'lower',
 });
 
-const noneEffect = () => {
+function resetEffect() {
   effectLevelSlider.setAttribute('disabled', true);
   imgUploadEffect.classList.add('hidden');
-  ImgUploadPreview.className = 'img-upload__preview';
-  ImgUploadPreview.style.filter = '';
+  imgUploadPreview.className = 'img-upload__preview';
+  imgUploadPreview.style.filter = '';
   effectLevelValue .value = '';
 };
 
@@ -126,23 +154,23 @@ const changeEffect = (evt) => {
   } else {
     effectLevelSlider.removeAttribute('disabled');
     imgUploadEffect .classList.remove('hidden');
-    ImgUploadPreview.className = 'img-upload__preview';
-    ImgUploadPreview.classList.add(`effects__preview--${selectedEffect}`);
+    imgUploadPreview.className = 'img-upload__preview';
+    imgUploadPreview.classList.add(`effects__preview--${selectedEffect}`);
     effectLevelSlider .noUiSlider.updateOptions(effects[selectedEffect].options);
   }
 };*/
 
-const changeEffect  = (evt) => {
-  if (evt.target.matches('input[type="radio"]')) {
-    const currentValue = evt.target.value;
+function changeEffect  (evt) {
+  const currentValue= evt.target.value;
+
     if (currentValue === 'none') {
-      noneEffect ();
-      return;
+      resetEffect ();
+      return resetEffect();
     }
 
     effectLevel.classList.remove('hidden');
     effectLevelSlider.removeAttribute('disabled', true);
-    ImgUploadPreview.classList.add(`effects__preview--${currentValue}`);
+    imgUploadPreview.classList.add(`effects__preview--${currentValue}`);
 
     effectLevelSlider.noUiSlider.updateOptions(effects [currentValue].options);
 
@@ -150,10 +178,10 @@ const changeEffect  = (evt) => {
       effectLevelValue.value = effectLevelSlider.noUiSlider.get();
 
       const {filter, unit} =effects [currentValue];
-      ImgUploadPreview.style.filter = `${filter}(${effectLevelValue.value}${unit}`;
+      imgUploadPreview.style.filter = `${filter}(${effectLevelValue.value}${unit}`;
     });
-  }
-};
+  };
+
 
 effectsList.addEventListener('change', changeEffect);
 
