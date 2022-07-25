@@ -32,7 +32,7 @@ const sendData = async (onSuccess, onFail, body) => {
 
     onSuccess();
   } catch (error) {
-    onFail('Не получилось отвправить форму. Попробуйте еще раз');
+    onFail('Не получилось отправить форму. Попробуйте еще раз');
   }
 };
 
