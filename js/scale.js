@@ -38,12 +38,11 @@ function resetScale () {
 
 }
 
-//resetScale();
 
 function changeSize(newValue){
   currentSize = newValue;
-  imgUploadPreview.style.transform = 'scale($ {currentSize / 100} )';
-  scaleControlValue.value= '$ {currentSize} %';
+  imgUploadPreview.style.transform = `scale($ {currentSize / 100} )`;
+  scaleControlValue.value= `$ {currentSize} %`;
 }
 
 
@@ -58,7 +57,7 @@ const optionsFromZeroToOne= {
   step:0.1
 };
 
-const optionsFromZerooThree={
+const optionsFromZeroToThree={
   range: {
     min :0,
     max:3,
@@ -131,10 +130,17 @@ const effects = {
     },
   },
 };
+
 noUiSlider.create(effectLevelSlider, {
-  optionsFromZeroToOne,
+  range: {
+    min: 0,
+    max: 1,
+  },
+  start: 1,
+  step: 0.1,
   connect: 'lower',
 });
+
 
 function resetEffect() {
   effectLevelSlider.setAttribute('disabled', true);
@@ -144,27 +150,12 @@ function resetEffect() {
   effectLevelValue .value = '';
 };
 
-/*
-const changeEffect = (evt) => {
-
-  const selectedEffect = evt.target.value;
-
-  if (selectedEffect === 'none') {
-    noneEffect();
-  } else {
-    effectLevelSlider.removeAttribute('disabled');
-    imgUploadEffect .classList.remove('hidden');
-    imgUploadPreview.className = 'img-upload__preview';
-    imgUploadPreview.classList.add(`effects__preview--${selectedEffect}`);
-    effectLevelSlider .noUiSlider.updateOptions(effects[selectedEffect].options);
-  }
-};*/
 
 function changeEffect  (evt) {
   const currentValue= evt.target.value;
 
     if (currentValue === 'none') {
-      resetEffect ();
+      //resetEffect ();
       return resetEffect();
     }
 
@@ -172,13 +163,13 @@ function changeEffect  (evt) {
     effectLevelSlider.removeAttribute('disabled', true);
     imgUploadPreview.classList.add(`effects__preview--${currentValue}`);
 
-    effectLevelSlider.noUiSlider.updateOptions(effects [currentValue].options);
+    effectLevelSlider.noUiSlider.updateOptions(effects [currentValue].options)
 
     effectLevelSlider.noUiSlider.on('update',  () => {
       effectLevelValue.value = effectLevelSlider.noUiSlider.get();
 
       const {filter, unit} =effects [currentValue];
-      imgUploadPreview.style.filter = `${filter}(${effectLevelValue.value}${unit}`;
+      imgUploadPreview.style.filter = `${filter}${effectLevelValue.value}${unit}`;
     });
   };
 
