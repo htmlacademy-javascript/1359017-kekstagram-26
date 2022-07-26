@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {resetScale} from './scale.js';
+
 const RE = /^#[a-zA-ZА-Яа-яЁё0-9]{1,19}$/;
 const HASHTAG = {
   MAX_SIZE: 19,
@@ -10,7 +10,7 @@ const uploadForm = document.querySelector('.img-upload__form');
 const bodyElement = document.querySelector('body');
 const uploadFile = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
-//const uploadCancel = document.querySelector('.img-upload__cancel');
+const uploadCancel = document.querySelector('.img-upload__cancel');
 const hashTags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 
@@ -55,7 +55,7 @@ function closeModal(){
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
   pristine.reset();
-  resetScale();
+
 }
 function onPopupEscKeydown (evt) {
   const{activeElement}=document;
@@ -82,7 +82,7 @@ const onUploadFormSubmit = (evt)=> {
   pristine.validate();
 };
 
-/*function formClose(){
+function formClose(){
   uploadOverlay.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   uploadCancel.addEventListener('click', formClose);
@@ -90,7 +90,7 @@ const onUploadFormSubmit = (evt)=> {
   uploadForm .reset();
   pristine.reset();
 }
-formClose();*/
+formClose();
 
 uploadForm.addEventListener('submit', onUploadFormSubmit);
 uploadForm.addEventListener('reset', closeModal);
