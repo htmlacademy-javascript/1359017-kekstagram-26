@@ -1,5 +1,6 @@
+import { sendData } from './api.js';
 import {isEscapeKey} from './util.js';
-
+//import{blockSubmitButton,onSuccessSendForm, onErrorSendForm} from '/api.js';
 const RE = /^#[a-zA-ZА-Яа-яЁё0-9]{1,19}$/;
 const HASHTAG = {
   MAX_SIZE: 19,
@@ -73,7 +74,8 @@ function submitForm(evt) {
   const isImgUploadFormValid = pristine.validate();
 
   if(isImgUploadFormValid){
-
+    //blockSubmitButton();//
+    sendData(); //
     uploadForm.reset();
   }
 }
