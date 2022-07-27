@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-
+import{onSuccessSendForm, onErrorSendForm, sendData, blockSubmitButton} from '/api.js';
 
 const RE = /^#[a-zA-ZА-Яа-яЁё0-9]{1,19}$/;
 const HASHTAG = {
@@ -15,7 +15,6 @@ const uploadCancel = document.querySelector('.img-upload__cancel');
 const hashTags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 
-//const submitButton = formElement.querySelector('.img-upload__submit');//11 задание
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -33,16 +32,6 @@ const isArrayUnique = (array)=> new Set(array).size === array.length;
 
 const validateDescription = (value) => value.length <= 140;
 
-
-/*const blockSubmitButton = () => { //11 задание
-  submitButton.disabled = true;
-  submitButton.textContent = 'Публикую...';
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
-};*/
 
 uploadFile.addEventListener('change', openModal);
 uploadFile.addEventListener('submit', submitForm);
@@ -87,7 +76,8 @@ function submitForm(evt) {
   const isImgUploadFormValid = pristine.validate();
 
   if(isImgUploadFormValid){
-    //blockSubmitButton();//11 задание
+    blockSubmitButton();
+    sendData(onSuccessSendForm, onErrorSendForm);
     uploadForm.reset();
   }
 }
@@ -108,3 +98,4 @@ formClose();
 
 uploadForm.addEventListener('submit', onUploadFormSubmit);
 uploadForm.addEventListener('reset', closeModal);
+
