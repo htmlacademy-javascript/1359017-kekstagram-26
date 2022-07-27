@@ -39,8 +39,6 @@ function showSuccessMessageSending () {
   document.addEventListener('click', removeSuccessMessageOnClick);
   document.addEventListener('keydown', removeSuccessMessageOnEsc);
 }
-
-
 function displaySendErrorMessage () {
   body.append(errorContainer);
 

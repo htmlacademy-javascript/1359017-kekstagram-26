@@ -3,6 +3,7 @@ import { getRandom } from './util.js';
 
 const changeFilters = (photos) => {
 
+
   const buttonDefault = document.querySelector('#filter-default');
   const buttonRandom = document.querySelector('#filter-random');
   const buttonDiscussed = document.querySelector('#filter-discussed');
