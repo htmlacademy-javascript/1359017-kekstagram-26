@@ -25,3 +25,4 @@ similarPictures.forEach (({url, comments, likes})=> {
 
 picture.appendChild(similarPicturesFragment);
 
+export{similarPictures};
