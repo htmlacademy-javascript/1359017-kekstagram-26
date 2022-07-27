@@ -15,6 +15,7 @@ const uploadCancel = document.querySelector('.img-upload__cancel');
 const hashTags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 
+
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper'
@@ -30,6 +31,7 @@ const unifyHashtags = (value) => {
 const isArrayUnique = (array)=> new Set(array).size === array.length;
 
 const validateDescription = (value) => value.length <= 140;
+
 
 uploadFile.addEventListener('change', openModal);
 uploadFile.addEventListener('submit', submitForm);
@@ -96,3 +98,5 @@ formClose();
 
 uploadForm.addEventListener('submit', onUploadFormSubmit);
 uploadForm.addEventListener('reset', closeModal);
+
+export {formClose};
