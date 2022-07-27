@@ -1,7 +1,7 @@
 import { showAlert} from './util.js';
 //import{formClose} from './form.js';
 import {changeFilters} from './sorting.js';
-
+import { renderPhoto } from './make-picture.js';
 const body = document.querySelector('body');
 const successContainer = document.querySelector('#success').content.querySelector('.success').cloneNode(true); //переменные для отправки данных
 const filters = document.querySelector('.img-filters');
@@ -103,6 +103,7 @@ function getData(onSuccess) {
       showAlert('Отсутствует соединение с сервером, попробуйте позже...');
     });
 }
+getData(renderPhoto, showAlert);
 
 function sendData(onSuccess, onFail ) {
   fetch(dataSendingAddress,

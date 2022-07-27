@@ -3,6 +3,6 @@ import './big-picture.js';
 import   './form.js';
 import   './scale.js';
 import { getData } from './api.js';
-import { similarPictures } from './make-picture.js';
-getData(similarPictures);
+import { renderPhoto} from './make-picture.js';
+getData(renderPhoto);
 import './filters.js';

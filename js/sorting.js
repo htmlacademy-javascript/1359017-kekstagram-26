@@ -1,4 +1,4 @@
-import { similarPictures } from './make-picture.js';
+import { renderPhoto } from './make-picture.js';
 import { getRandom } from './util.js';
 
 const changeFilters = (photos) => {
@@ -21,7 +21,7 @@ const changeFilters = (photos) => {
 
     const fragment = document.createDocumentFragment();
 
-    similarPictures(picturesArray);
+    renderPhoto(picturesArray);
     similarListElement.appendChild(fragment);
   };
 
