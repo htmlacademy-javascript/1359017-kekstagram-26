@@ -44,4 +44,4 @@ function showAlert () {
 }
 
 
-export {getRandomArrayElement, checkString,getRandom ,isEscapeKey,showAlert};
+export{getRandomArrayElement, checkString,getRandom ,isEscapeKey,showAlert};

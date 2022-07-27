@@ -1,133 +1,134 @@
-import {isEscapeKey} from './util.js';
+import { showAlert} from './util.js';
 import{formClose} from './form.js';
+import{similarPictures} from  './make-picture.js';
 
 const body = document.querySelector('body');
 const successContainer = document.querySelector('#success').content.querySelector('.success').cloneNode(true); //переменные для отправки данных
-const successButton = successContainer.querySelector('.success__button');
+
 const errorContainer = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
-const errorButton = errorContainer.querySelector('.error__button');
-const submitButton = document.querySelector('#upload-submit');
+
+const submitFormElement = document.querySelector('.img-upload__submit');
 
 
-const onPopupEscKeydown = (evt) => {
-  if (isEscapeKey(evt) && !body.contains(errorContainer)) {
-    evt.preventDefault();
-    formClose();
-  }
-};
-onPopupEscKeydown ();
-
-
-const blockSubmitButton = () => {// На время выполнения запроса к серверу кнопка «Отправить» блокируется.
-  submitButton.disabled = true;
-  submitButton.textContent = 'Отправляю...';
-};
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
-};
-
-
-const onClosePopupSuccess = (evt) => { // хочу закрыть окно об успешной отправке не получается
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeSuccessPopup();
-  }
-};
-
-const successContainerClick = (evt) => {
-  if (evt.target === successContainer) {
-    closeSuccessPopup();
-  }
-};
-
-successButton.addEventListener('click', () => closeSuccessPopup());
-
-function closeSuccessPopup () {
-  successContainer.remove();
-  document.addEventListener('click', successContainerClick);
-  document.addEventListener('keydown', onClosePopupSuccess);
-}
-
-const showSuccessPopup = () => { // тут надо сделать открытие окна об успешной отправке
+function showSuccessMessageSending () {
   body.append(successContainer);
-  document.addEventListener('click', successContainerClick);
-  document.addEventListener('keydown', onClosePopupSuccess);
-};
 
-const onSuccessSendForm = () => {
-  formClose();
-  showSuccessPopup();
-  unblockSubmitButton();
-};
+  const successMessage = document.querySelector('.success');
+  const successInner = document.querySelector('.success__inner');
+  const successTitle = document.querySelector('.success__title');
 
+  const removeSuccessMessageOnClick = (evt) => {
+    if(evt.target !== successInner && evt.target !== successTitle) {
+      successMessage.remove();
+      removeSuccessMessageEventListeners();
+    }
+  };
 
-const onClosePopupError = (evt) => { // закрытие окна о ошибки
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeErrorPopup();
+  const removeSuccessMessageOnEsc = (evt) => {
+    if(evt.key === 'Escape') {
+      successMessage.remove();
+      removeSuccessMessageEventListeners ();
+    }
+  };
+
+  function removeSuccessMessageEventListeners () {
+    document.removeEventListener('click', removeSuccessMessageOnClick);
+    document.removeEventListener('keydown', removeSuccessMessageOnEsc);
   }
-};
 
-const errorContainerClick = (evt) => {
-  if (evt.target === errorContainer) {
-    closeErrorPopup();
+  document.addEventListener('click', removeSuccessMessageOnClick);
+  document.addEventListener('keydown', removeSuccessMessageOnEsc);
+}
+
+function displaySendErrorMessage () {
+  body.append(errorContainer);
+
+  const errorMessageElement = document.querySelector('.error');
+  const errorInnerElement = document.querySelector('.error__inner');
+  const errorTitleElement = document.querySelector('.error__title');
+
+
+  const removeErrorMessageOnClick = (evt) => {
+    if(evt.target !== errorInnerElement && evt.target !== errorTitleElement) {
+      errorMessageElement.remove();
+
+      removeErrorMessage ();
+    }
+  };
+
+  const removeErrorMessageOnEsc = (evt) => { //удаление
+    if(evt.key === 'Escape') {
+      errorMessageElement.remove();
+
+      removeErrorMessage ();
+    }
+  };
+
+  function removeErrorMessage () {
+    document.removeEventListener('click', removeErrorMessageOnClick);
+    document.removeEventListener('keydown', removeErrorMessageOnEsc);
   }
-};
 
-errorButton.addEventListener('click', () => closeErrorPopup());
-
-function closeErrorPopup () {
-  errorContainer.remove();
-  document.removeEventListener('click', errorContainerClick);
-  document.removeEventListener('keydown', onClosePopupError);
+  document.addEventListener('click', removeErrorMessageOnClick);
+  document.addEventListener('keydown', removeErrorMessageOnEsc);
 }
 
 
-const showErrorPopup = () => {
-  body.append(errorContainer);
-  document.addEventListener('click', errorContainerClick);// открытие окна об ошибке
-  document.addEventListener('keydown', onClosePopupError);
+const blockSubmitButton = () => {
+  submitFormElement.disabled = true;
+  submitFormElement.textContent = 'Отправляю...';
 };
 
-const onErrorSendForm = () => {
-  showErrorPopup();
-  unblockSubmitButton();
+const unblockSubmitButton = () => {
+  submitFormElement.disabled = false;
+  submitFormElement.textContent = 'Опубликовать';
 };
 
-const getData = async (onSuccess, onFail) => {
-  try {
-    const response = await fetch(
-      'https://26.javascript.pages.academy/kekstagram/data'
-    );
 
-    if (!response.ok) {
-      throw new Error ('Не получилось загрузить информацию');
-    }
+const getData=async (onSuccess, onError)=>{
+  fetch('https://26.javascript.pages.academy/kekstagram/data')
+    .then ((response)=>{
+      if (response.ok) {
 
-    const photosData = await response.json();
-    onSuccess(photosData);
-  } catch (error) {
-    onFail('Не получилось загрузить информацию');
-  }
+        return response.json();
+      }
+    })
+    .then((data) => {
+      onSuccess(data);
+    })
+    .catch(() => {
+      onError();
+    });
 };
-const sendData = async (onSuccess, onFail,) => {
+getData(similarPictures, showAlert);
+
+
+const sendData = async (onSuccess, onFail, body) => {
   try {
     const response = await fetch(
       'https://26.javascript.pages.academy/kekstagram',
       {
         method: 'POST',
-        body,
+        body:body,
       }
     );
 
     if (!response.ok) {
-      throw new Error ('Не получилось отправить форму. Попробуйте еще раз');
+      formClose();
+      showSuccessMessageSending();
+      blockSubmitButton();
+      unblockSubmitButton();
+      displaySendErrorMessage();
     }
 
     onSuccess();
   } catch (error) {
-    onFail('Не получилось отвправить форму. Попробуйте еще раз');
+    displaySendErrorMessage();
+    unblockSubmitButton();
   }
 };
-export {getData, sendData,blockSubmitButton,onSuccessSendForm, onErrorSendForm};
+
+
+export{sendData};
+
+

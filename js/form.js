@@ -1,5 +1,6 @@
+import { sendData } from './api.js';
 import {isEscapeKey} from './util.js';
-import{onSuccessSendForm, onErrorSendForm, sendData, blockSubmitButton} from '/api.js';
+//import{onSuccessSendForm, onErrorSendForm, sendData, blockSubmitButton} from '/api.js';
 
 const RE = /^#[a-zA-ZА-Яа-яЁё0-9]{1,19}$/;
 const HASHTAG = {
@@ -76,8 +77,7 @@ function submitForm(evt) {
   const isImgUploadFormValid = pristine.validate();
 
   if(isImgUploadFormValid){
-    blockSubmitButton();
-    sendData(onSuccessSendForm, onErrorSendForm);
+    sendData(FormData);
     uploadForm.reset();
   }
 }
@@ -99,3 +99,4 @@ formClose();
 uploadForm.addEventListener('submit', onUploadFormSubmit);
 uploadForm.addEventListener('reset', closeModal);
 
+export {formClose};
