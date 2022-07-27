@@ -21,7 +21,7 @@ const getRandomArrayElement = (elements) => elements [getRandom(0, elements.leng
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-/*const ALERT_SHOW_TIME = 5000;
+const ALERT_SHOW_TIME = 5000;
 
 function showAlert () {
   const alertContainer= document.createElement('p');
@@ -41,7 +41,7 @@ function showAlert () {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-}*/
+}
 
 
-export {getRandomArrayElement, checkString,getRandom ,isEscapeKey,/*showAlert*/};
+export {getRandomArrayElement, checkString,getRandom ,isEscapeKey,showAlert};

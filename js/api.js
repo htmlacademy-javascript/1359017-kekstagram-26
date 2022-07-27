@@ -84,7 +84,7 @@ function closeErrorPopup () {
 }
 
 
-/*const showErrorPopup = () => {
+const showErrorPopup = () => {
   body.append(errorContainer);
   document.addEventListener('click', errorContainerClick);// открытие окна об ошибке
   document.addEventListener('keydown', onClosePopupError);
@@ -93,7 +93,7 @@ function closeErrorPopup () {
 const onErrorSendForm = () => {
   showErrorPopup();
   unblockSubmitButton();
-};*/
+};
 
 const getData = async (onSuccess, onFail) => {
   try {
@@ -111,7 +111,7 @@ const getData = async (onSuccess, onFail) => {
     onFail('Не получилось загрузить информацию');
   }
 };
-const sendData = async (onSuccess, onFail, body) => {
+const sendData = async (onSuccess, onFail,) => {
   try {
     const response = await fetch(
       'https://26.javascript.pages.academy/kekstagram',
@@ -130,5 +130,4 @@ const sendData = async (onSuccess, onFail, body) => {
     onFail('Не получилось отвправить форму. Попробуйте еще раз');
   }
 };
-export {getData, sendData,blockSubmitButton,onSuccessSendForm, /*onErrorSendForm*/};
-
+export {getData, sendData,blockSubmitButton,onSuccessSendForm, onErrorSendForm};
