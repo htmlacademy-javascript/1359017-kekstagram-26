@@ -23,25 +23,26 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const ALERT_SHOW_TIME = 5000;
 
-function showAlert () {
-  const alertContainer= document.createElement('p');
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = '100';
   alertContainer.style.position = 'absolute';
-  alertContainer.style.backgroundColor = 'red';
-  alertContainer.style.textAlign = 'center';
   alertContainer.style.left = '0';
   alertContainer.style.top = '0';
   alertContainer.style.right = '0';
-  alertContainer.style. margin = 0;
-  alertContainer.style.padding = '20px 3px';
-  alertContainer.style.fontSize = '16px';
-  alertContainer.style.textTransform = 'none';
-  alertContainer.textContent = 'Ошибка загрузки фотографий других пользователей. Попробуйте перезагрузить страницу, если проблема не будет устранена, попробуйте позже.';
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
   document.body.append(alertContainer);
 
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-}
+};
 
 
-export{getRandomArrayElement, checkString,getRandom ,isEscapeKey,showAlert};
+export {getRandomArrayElement, checkString,getRandom ,isEscapeKey,showAlert};
