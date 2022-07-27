@@ -40,6 +40,7 @@ function showSuccessMessageSending () {
   document.addEventListener('keydown', removeSuccessMessageOnEsc);
 }
 
+
 function displaySendErrorMessage () {
   body.append(errorContainer);
 
@@ -105,9 +106,7 @@ function getData(onSuccess) {
     });
 }
 
-
-
-function sendData(onSuccess, onFail, body) {
+function sendData(onSuccess, onFail ) {
   fetch(dataSendingAddress,
     {
       method: 'POST',
@@ -126,5 +125,5 @@ function sendData(onSuccess, onFail, body) {
 }
 
 
-export { getData, sendData };
+export { getData, sendData,showSuccessMessageSending,displaySendErrorMessage,blockSubmitButton ,unblockSubmitButton};
 
