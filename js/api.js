@@ -1,10 +1,10 @@
 import { showAlert} from './util.js';
-import{formClose} from './form.js';
-import{similarPictures} from  './make-picture.js';
-
+//import{formClose} from './form.js';
+import {changeFilters} from './sorting.js';
+import { renderPhoto } from './make-picture.js';
 const body = document.querySelector('body');
 const successContainer = document.querySelector('#success').content.querySelector('.success').cloneNode(true); //переменные для отправки данных
-
+const filters = document.querySelector('.img-filters');
 const errorContainer = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
 
 const submitFormElement = document.querySelector('.img-upload__submit');
@@ -39,7 +39,6 @@ function showSuccessMessageSending () {
   document.addEventListener('click', removeSuccessMessageOnClick);
   document.addEventListener('keydown', removeSuccessMessageOnEsc);
 }
-
 function displaySendErrorMessage () {
   body.append(errorContainer);
 
@@ -84,51 +83,46 @@ const unblockSubmitButton = () => {
   submitFormElement.textContent = 'Опубликовать';
 };
 
+const dataReceivingAddress = 'https://26.javascript.pages.academy/kekstagram/data';
+const dataSendingAddress = 'https://26.javascript.pages.academy/kekstagram';
 
-const getData=async (onSuccess, onError)=>{
-  fetch('https://26.javascript.pages.academy/kekstagram/data')
-    .then ((response)=>{
+function getData(onSuccess) {
+  fetch(dataReceivingAddress)
+    .then((response) => {
       if (response.ok) {
-
         return response.json();
       }
+      throw new Error;
     })
-    .then((data) => {
-      onSuccess(data);
+    .then((photos) => {
+      onSuccess(photos);
+      filters.style.opacity = '1';
+      changeFilters(photos);
     })
     .catch(() => {
-      onError();
+      showAlert('Отсутствует соединение с сервером, попробуйте позже...');
     });
-};
-getData(similarPictures, showAlert);
+}
+getData(renderPhoto, showAlert);
 
-
-const sendData = async (onSuccess, onFail, body) => {
-  try {
-    const response = await fetch(
-      'https://26.javascript.pages.academy/kekstagram',
-      {
-        method: 'POST',
-        body:body,
+function sendData(onSuccess, onFail ) {
+  fetch(dataSendingAddress,
+    {
+      method: 'POST',
+      body,
+    },)
+    .then((response) => {
+      if (response.ok) {
+        onSuccess();
+      } else {
+        onFail();
       }
-    );
-
-    if (!response.ok) {
-      formClose();
-      showSuccessMessageSending();
-      blockSubmitButton();
-      unblockSubmitButton();
-      displaySendErrorMessage();
-    }
-
-    onSuccess();
-  } catch (error) {
-    displaySendErrorMessage();
-    unblockSubmitButton();
-  }
-};
+    })
+    .catch(() => {
+      onFail();
+    });
+}
 
 
-export{sendData};
-
+export { getData, sendData,showSuccessMessageSending,displaySendErrorMessage,blockSubmitButton ,unblockSubmitButton};
 

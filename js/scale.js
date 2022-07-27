@@ -142,7 +142,6 @@ function changeEffect  (evt) {
   });
 }
 
-
 effectsList.addEventListener('change', changeEffect);
 
 export {resetScale};
